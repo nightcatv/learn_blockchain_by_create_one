@@ -10,9 +10,9 @@ class Blockchain(object):
 		self.current_transactions = []
 
 		# Create the genesis block
-		self.now_block(previous_hash = 1, proof = 100)
+		self.new_block(previous_hash = 1, proof = 100)
 
-	def new_block(self):
+	def new_block(self, proof, previous_hash = None):
 		"""
 		Creates a new Block in the Blockchain
 
@@ -22,8 +22,8 @@ class Blockchain(object):
 		"""
 
 		block = {
-			'index': len(self.chain) + 1
-			'timestamp': time()
+			'index': len(self.chain) + 1,
+			'timestamp': time(),
 			'transactions': self.current_transactions, 
 			'proof': proof, 
 			'previous_hash': previous_hash or self.hash(self.chain[-1]), 
@@ -100,3 +100,6 @@ class Blockchain(object):
 		"""
 
 		guess = f'{last_proof}{proof}'.encode()
+		guess_hash = hashlib.sha256(guess).hexdigest()
+
+		return guess_hash[:4] == "0000"
