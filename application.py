@@ -61,7 +61,7 @@ def new_transaction():
     }
     return jsonify(response), 201
 
-@app.route('/chain', method = ['POST'])
+@app.route('/chain', methods = ['POST'])
 def full_chain():
     response = {
         'chain': blockchain.chain, 
